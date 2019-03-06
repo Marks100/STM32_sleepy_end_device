@@ -9,7 +9,6 @@
 #include "HAL_BRD.h"
 
 false_true_et HAL_BRD_rtc_triggered_s;
-disable_enable_et debug_mode;
 
 
 /*!
@@ -25,6 +24,8 @@ disable_enable_et debug_mode;
 ***************************************************************************************************/
 void HAL_BRD_init( void )
 {
+	disable_enable_et debug_mode;
+
 	/* Disable the JTAG as this saves us some pins :) */
 	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);
 
@@ -72,9 +73,10 @@ void HAL_BRD_init( void )
 		debug_mode = ENABLE_;
 	#endif
 
-
 	if( debug_mode == ENABLE_ )
 	{
+		set_operating_mode( DEBUG_MODE );
+
 		/* Configure the GPIO_LED pin */
 		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;
 		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;

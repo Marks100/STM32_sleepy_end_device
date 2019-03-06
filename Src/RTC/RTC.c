@@ -98,9 +98,6 @@ void RTC_ext_init( void )
 
 void RTC_set_clk_output( disable_enable_et state, RTC_clk_out_setting_et setting )
 {
-
-
-
 }
 
 
