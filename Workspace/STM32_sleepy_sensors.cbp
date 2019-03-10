@@ -56,6 +56,10 @@
 			<Option target="all" />
 			<Option target="memory_stats" />
 		</Unit>
+		<Unit filename="../Src/BMP280/BMP280.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../Src/BMP280/BMP280.h" />
 		<Unit filename="../Src/COMMON_MODULES/COMPILER_config.h">
 			<Option target="all" />
 			<Option target="memory_stats" />
@@ -219,6 +223,11 @@
 			<Option target="all" />
 			<Option target="memory_stats" />
 		</Unit>
+		<Unit filename="../Src/RF/NRF24.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../Src/RF/NRF24.h" />
+		<Unit filename="../Src/RF/NRF24_Registers.h" />
 		<Unit filename="../Src/RF/RFM69.c">
 			<Option compilerVar="CC" />
 			<Option target="all" />
@@ -232,6 +241,10 @@
 			<Option target="all" />
 			<Option target="memory_stats" />
 		</Unit>
+		<Unit filename="../Src/RTC/RTC.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../Src/RTC/RTC.h" />
 		<Unit filename="../Src/VERSIONS/VERSIONS.c">
 			<Option compilerVar="CC" />
 			<Option target="all" />

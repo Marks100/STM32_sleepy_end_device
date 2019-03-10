@@ -28,12 +28,13 @@ u8_t  NRF24_register_readback_s[NRF24_DEFAULT_CONFIGURATION_SIZE];
 u8_t  NRF24_rf_frame_s[10];
 MODE_type_et operating_mode;
 
-void         set_operating_mode( MODE_type_et mode );
-MODE_type_et get_operating_mode( void );
-
 
 int main(void)
 {
+
+	/* Default the mode and then afterwards read the mode switch to update */
+	operating_mode = NORMAL_MODE;
+
 	RCC_DeInit();
 	SystemInit();
 
@@ -50,9 +51,6 @@ int main(void)
 	HAL_SPI_init();
 	HAL_ADC_init();
 	NVM_init();
-
-	/* Default the mode and then afterwards read the mode switch to update */
-	operating_mode = NORMAL_MODE;
 
 	if( get_operating_mode() == DEBUG_MODE )
 	{
@@ -73,14 +71,14 @@ int main(void)
 		{
 			BMP280_trigger_meas();
 
+			/* Populate all the data into the RF frame */
+			populate_rf_frame();
+
 			/* Disable the ADC before the RF transmission to save as much power as possible */
 			HAL_ADC_de_init();
 
 			/* Disable the I2C peripheral and clock to save power  */
 			HAL_I2C_de_init();
-
-			/* Populate all the data into the RF frame */
-			populate_rf_frame();
 
 			/* Send the data */
 			NRF_simple_send( NRF24_rf_frame_s, sizeof( NRF24_rf_frame_s ), 1u );
@@ -222,6 +220,19 @@ void delay_us(u16_t us)
 	RCC_HCLKConfig(RCC_SYSCLK_Div1);
 	RCC_GetClocksFreq (&RCC_Clocks);
 }
+
+
+void set_operating_mode( MODE_type_et mode )
+{
+	operating_mode = mode;
+}
+
+MODE_type_et get_operating_mode( void )
+{
+	return( operating_mode );
+}
+
+
 
 
 
