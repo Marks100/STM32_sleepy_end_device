@@ -25,7 +25,7 @@
 RCC_ClocksTypeDef RCC_Clocks;
 u16_t delay_timer = 0u;
 u8_t  NRF24_register_readback_s[NRF24_DEFAULT_CONFIGURATION_SIZE];
-u8_t  NRF24_rf_frame_s[10];
+u8_t  NRF24_rf_frame_s[12];
 MODE_type_et operating_mode;
 
 
@@ -186,8 +186,8 @@ void populate_rf_frame( void )
 	NRF24_rf_frame_s[6] =  7u;
 	NRF24_rf_frame_s[7] =  ( ( temperature & 0x0000FF00 ) >> 8u );
 	NRF24_rf_frame_s[8] =  ( temperature & 0x0000FF );  //round the first part
-	NRF24_rf_frame_s[9] =  0xCC;
-	NRF24_rf_frame_s[10] = 0xDD;
+	NRF24_rf_frame_s[9] =  ( ( NVM_info_s.NVM_generic_data_blk_s.sleep_time & 0xFF00 ) >> 8u );
+	NRF24_rf_frame_s[10] = ( NVM_info_s.NVM_generic_data_blk_s.sleep_time & 0x00FF );
 }
 
 

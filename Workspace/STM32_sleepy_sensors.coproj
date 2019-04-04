@@ -162,9 +162,9 @@
     <File name="Src/HAL/HAL_SPI" path="" type="2"/>
     <File name="Src/COMMON_MODULES/xINC/STDC/STDC.h" path="../Src/COMMON_MODULES/xINC/STDC/STDC.h" type="1"/>
     <File name="stm_lib/src/stm32f10x_spi.c" path="stm_lib/src/stm32f10x_spi.c" type="1"/>
+    <File name="Src/COMMON_MODULES/xLIBS/CHKSUM/CHKSUM.h" path="../Src/COMMON_MODULES/xLIBS/CHKSUM/CHKSUM.h" type="1"/>
     <File name="Src/COMMON_MODULES/xINC/SELMATH/SELMATH.c" path="../Src/COMMON_MODULES/xINC/SELMATH/SELMATH.c" type="1"/>
     <File name="Src/PROJ_CONFIG/STDC_config.h" path="../Src/PROJ_CONFIG/STDC_config.h" type="1"/>
-    <File name="Src/COMMON_MODULES/xLIBS/CHKSUM/CHKSUM.h" path="../Src/COMMON_MODULES/xLIBS/CHKSUM/CHKSUM.h" type="1"/>
     <File name="Src/COMMON_MODULES/xLIBS/CHKSUM" path="" type="2"/>
     <File name="Src/COMMON_MODULES/xINC/STDC/STDC.o" path="../Src/COMMON_MODULES/xINC/STDC/STDC.o" type="1"/>
     <File name="Src/COMMON_MODULES/xLIBS/CHKSUM/CHKSUM.c" path="../Src/COMMON_MODULES/xLIBS/CHKSUM/CHKSUM.c" type="1"/>

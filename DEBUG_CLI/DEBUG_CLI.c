@@ -2395,35 +2395,6 @@ STATIC void DEBUG_CLI_RX_PIN_interrupt_handler(uint_least8_t index)
 }
 
 
-
-
-///*!
-//****************************************************************************************************
-//*
-//*   \brief         The will wake the serial port from another task if data needs to be sent
-//*
-//*   \author        MS
-//*
-//*   \return        void
-//*
-//***************************************************************************************************/
-//STATIC void DEBUG_CLI_external_wakeup( u8_t* data_p, u16_t len )
-//{
-//    /* Reset the timeout */
-//    DEBUG_CLI_reset_task_timeout();
-//
-//    /* Lets simulate a 'CR' being enters as this keeps the DEBUG CLI state machine as it was before */
-//    DEBUG_CLI_cr_received_s = SEL_TRUE;
-//
-//    /* Copy the data into the message buffer, simulating user interaction */
-//    //STDC_memcpy( DEBUG_CLI_msg_read_s, data_p, len );
-//
-//    /* Start the SERIAL task by posting the SERIAL semaphore */
-//    Semaphore_post( DEBUG_CLI_Sem_Handle );
-//}
-//
-
-
 /*!
  ****************************************************************************************************
  *
