@@ -28,10 +28,12 @@
 #include "stm32f10x_rcc.h"
 #include "stm32f10x_i2c.h"
 #include "stm32f10x_gpio.h"
+#include "stm32f10x_conf.h"
 #include "misc.h"
 
 #include "C_defs.h"
 #include "STDC.h"
+#include "main.h"
 #include "HAL_BRD.h"
 #include "NVM.h"
 #include "COMPILER_defs.h"
@@ -40,6 +42,7 @@
 
 
 extern NVM_info_st NVM_info_s;
+false_true_et 	RTC_fault_occured_s;
 
 /***************************************************************************************************
 **                              Data declarations and definitions                                 **
@@ -71,6 +74,9 @@ const u8_t RTC_EXT_default_register_values[ RTC_EXT_MAX_NUM_REGS ] =
 
 void RTC_ext_init( void )
 {
+	/* Assume no fault until it is detected */
+	RTC_fault_occured_s = FALSE;
+
 	u8_t data_burst[16];
 	u8_t time_array[4];
 
@@ -92,6 +98,12 @@ void RTC_ext_init( void )
 	RTC_set_wakeup_time( NVM_info_s.NVM_generic_data_blk_s.sleep_time );
 
 	HAL_I2C_read_multiple_registers( RTC_EXT_I2C_ADDRESS, Control_status_1, data_burst, sizeof( data_burst ) );
+
+	//if( )
+	//{
+		//RTC_fault_occured_s = TRUE;
+	//}
+
 }
 
 

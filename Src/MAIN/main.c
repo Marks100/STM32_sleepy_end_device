@@ -31,7 +31,6 @@ MODE_type_et operating_mode;
 
 int main(void)
 {
-
 	/* Default the mode and then afterwards read the mode switch to update */
 	operating_mode = NORMAL_MODE;
 
@@ -47,7 +46,7 @@ int main(void)
 
 	/* Init the HW */
 	HAL_BRD_init();
-	HAL_I2C_init();
+	HAL_I2C1_init();
 	HAL_SPI_init();
 	HAL_ADC_init();
 	NVM_init();
@@ -78,7 +77,7 @@ int main(void)
 			HAL_ADC_de_init();
 
 			/* Disable the I2C peripheral and clock to save power  */
-			HAL_I2C_de_init();
+			HAL_I2C1_de_init();
 
 			/* Send the data */
 			NRF_simple_send( NRF24_rf_frame_s, sizeof( NRF24_rf_frame_s ), 1u );
@@ -233,6 +232,15 @@ MODE_type_et get_operating_mode( void )
 }
 
 
+
+void assert_failed(u8_t* file, u32_t line)
+{
+	u32_t lines;
+	u8_t files;
+
+	files = *file;
+	lines = line;
+}
 
 
 

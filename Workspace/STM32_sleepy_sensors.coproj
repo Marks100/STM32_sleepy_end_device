@@ -80,6 +80,7 @@
     <Component id="445" name="EXTI" path="" type="2"/>
     <Component id="452" name="SPI" path="" type="2"/>
     <Component id="453" name="I2C" path="" type="2"/>
+    <Component id="454" name="DBGMCU" path="" type="2"/>
     <Component id="455" name="FLASH" path="" type="2"/>
     <Component id="456" name="TIM" path="" type="2"/>
     <Component id="457" name="ADC" path="" type="2"/>
@@ -88,8 +89,9 @@
   </Components>
   <Files>
     <File name="Src/BMP280/BMP280.o" path="../Src/BMP280/BMP280.o" type="1"/>
-    <File name="Src/NVM/NVM.c" path="../Src/NVM/NVM.c" type="1"/>
+    <File name="stm_lib/src/stm32f10x_dbgmcu.c" path="stm_lib/src/stm32f10x_dbgmcu.c" type="1"/>
     <File name="Src/RF/NRF24.c" path="../Src/RF/NRF24.c" type="1"/>
+    <File name="Src/NVM/NVM.c" path="../Src/NVM/NVM.c" type="1"/>
     <File name="Src/PROJ_CONFIG/PROJ_config.h" path="../Src/PROJ_CONFIG/PROJ_config.h" type="1"/>
     <File name="Src/COMMON_MODULES/xINC/C_defs.h" path="../Src/COMMON_MODULES/xINC/C_defs.h" type="1"/>
     <File name="Src/VERSIONS/VERSIONS.c" path="../Src/VERSIONS/VERSIONS.c" type="1"/>
@@ -99,6 +101,7 @@
     <File name="cmsis/core_cmFunc.h" path="cmsis/core_cmFunc.h" type="1"/>
     <File name="stm_lib/src/misc.c" path="stm_lib/src/misc.c" type="1"/>
     <File name="cmsis_boot/stm32f10x.h" path="cmsis_boot/stm32f10x.h" type="1"/>
+    <File name="stm_lib/inc/stm32f10x_dbgmcu.h" path="stm_lib/inc/stm32f10x_dbgmcu.h" type="1"/>
     <File name="Src/COMMON_MODULES/xINC/SELMATH/SELMATH_pri.h" path="../Src/COMMON_MODULES/xINC/SELMATH/SELMATH_pri.h" type="1"/>
     <File name="cmsis_boot/stm32f10x_conf.h" path="cmsis_boot/stm32f10x_conf.h" type="1"/>
     <File name="Src/HAL/HAL_I2C" path="" type="2"/>
@@ -111,8 +114,8 @@
     <File name="Src/RTC/RTC.c" path="../Src/RTC/RTC.c" type="1"/>
     <File name="Src/COMMON_MODULES/xLIBS/CHKSUM/CHKSUM_svn_rev.tmpl" path="../Src/COMMON_MODULES/xLIBS/CHKSUM/CHKSUM_svn_rev.tmpl" type="1"/>
     <File name="Src/HAL/HAL_BRD/HAL_BRD.o" path="../Src/HAL/HAL_BRD/HAL_BRD.o" type="1"/>
-    <File name="Src/COMMON_MODULES/xINC/SELMATH/SELMATH.o" path="../Src/COMMON_MODULES/xINC/SELMATH/SELMATH.o" type="1"/>
     <File name="Src/BMP280" path="" type="2"/>
+    <File name="Src/COMMON_MODULES/xINC/SELMATH/SELMATH.o" path="../Src/COMMON_MODULES/xINC/SELMATH/SELMATH.o" type="1"/>
     <File name="stdio/printf.c" path="stdio/printf.c" type="1"/>
     <File name="stm_lib/src/stm32f10x_bkp.c" path="stm_lib/src/stm32f10x_bkp.c" type="1"/>
     <File name="cmsis_boot/startup/startup_stm32f10x_md.c" path="cmsis_boot/startup/startup_stm32f10x_md.c" type="1"/>
@@ -162,9 +165,9 @@
     <File name="Src/HAL/HAL_SPI" path="" type="2"/>
     <File name="Src/COMMON_MODULES/xINC/STDC/STDC.h" path="../Src/COMMON_MODULES/xINC/STDC/STDC.h" type="1"/>
     <File name="stm_lib/src/stm32f10x_spi.c" path="stm_lib/src/stm32f10x_spi.c" type="1"/>
+    <File name="Src/PROJ_CONFIG/STDC_config.h" path="../Src/PROJ_CONFIG/STDC_config.h" type="1"/>
     <File name="Src/COMMON_MODULES/xLIBS/CHKSUM/CHKSUM.h" path="../Src/COMMON_MODULES/xLIBS/CHKSUM/CHKSUM.h" type="1"/>
     <File name="Src/COMMON_MODULES/xINC/SELMATH/SELMATH.c" path="../Src/COMMON_MODULES/xINC/SELMATH/SELMATH.c" type="1"/>
-    <File name="Src/PROJ_CONFIG/STDC_config.h" path="../Src/PROJ_CONFIG/STDC_config.h" type="1"/>
     <File name="Src/COMMON_MODULES/xLIBS/CHKSUM" path="" type="2"/>
     <File name="Src/COMMON_MODULES/xINC/STDC/STDC.o" path="../Src/COMMON_MODULES/xINC/STDC/STDC.o" type="1"/>
     <File name="Src/COMMON_MODULES/xLIBS/CHKSUM/CHKSUM.c" path="../Src/COMMON_MODULES/xLIBS/CHKSUM/CHKSUM.c" type="1"/>
