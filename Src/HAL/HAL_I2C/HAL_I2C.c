@@ -205,7 +205,6 @@ void HAL_I2C1_receive_data( u8_t* data )
 void HAL_I2C1_generate_stop( void )
 {
 	I2C_GenerateSTOP(I2C1, ENABLE);
-	I2C_AcknowledgeConfig(I2C1, DISABLE);
 }
 
 
@@ -226,6 +225,21 @@ void HAL_I2C1_finish_read( void )
 	I2C_ReceiveData(I2C1);
 }
 
+void HAL_I2C1_finish_write( void )
+{
+	u16_t timeout = 0;
+
+	while (!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED))
+	{
+		if( timeout++ >= HAL_I2C_LL_TIMEOUT )
+		{
+			/* something is wrong */
+			assert_failed(1);
+			break;
+		}
+	}
+}
+
 
 
 
@@ -243,6 +257,8 @@ void HAL_I2C_write_single_register( u8_t dev_add, u8_t reg_add, u8_t* data )
 	HAL_I2C1_send_data(*data);
 
 	HAL_I2C1_generate_stop();
+
+	HAL_I2C1_finish_write();
 }
 
 
@@ -264,6 +280,8 @@ void HAL_I2C_write_multiple_register( u8_t dev_add, u8_t reg_start_add, u8_t* da
 	}
 
 	HAL_I2C1_generate_stop();
+
+	HAL_I2C1_finish_write();
 }
 
 
@@ -286,6 +304,7 @@ void HAL_I2C_read_register( u8_t dev_add, u8_t reg_add, u8_t* data )
 	HAL_I2C1_receive_data( data );
 
 	HAL_I2C1_generate_stop();
+	I2C_AcknowledgeConfig(I2C1,DISABLE);
 
 	HAL_I2C1_finish_read();
 }
@@ -309,10 +328,11 @@ void HAL_I2C_read_multiple_registers( u8_t dev_add, u8_t reg_start_add, u8_t* da
 
 	for( i = 0; i < num_bytes ; i++ )
 	{
-		HAL_I2C1_receive_data( data );
+		HAL_I2C1_receive_data( &data[i] );
 	}
 
 	HAL_I2C1_generate_stop();
+	I2C_AcknowledgeConfig(I2C1,DISABLE);
 
 	HAL_I2C1_finish_read();
 }

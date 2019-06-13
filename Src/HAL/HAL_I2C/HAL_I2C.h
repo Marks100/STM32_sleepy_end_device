@@ -51,6 +51,7 @@ void HAL_I2C1_send_data( u8_t data );
 void HAL_I2C1_receive_data( u8_t* data );
 void HAL_I2C1_generate_stop( void );
 void HAL_I2C1_finish_read( void );
+void HAL_I2C1_finish_write( void );
 
 
 
