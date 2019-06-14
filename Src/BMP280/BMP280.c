@@ -32,6 +32,8 @@ s32_t BMP280_pressure_reading_s;
 s32_t BMP280_temperature_reading_s;
 false_true_et BMP280_init_s;
 
+pass_fail_et BMP280_failure_status_s;
+
 /***************************************************************************************************
 **                              Data declarations and definitions                                 **
 ***************************************************************************************************/
@@ -41,6 +43,7 @@ false_true_et BMP280_init_s;
 void BMP280_init( void )
 {
 	BMP280_init_s = FALSE;
+	BMP280_failure_status_s = PASS;
 
 	BMP280_pressure_reading_s = 0;
 	BMP280_temperature_reading_s = 0;
@@ -55,9 +58,6 @@ void BMP280_init( void )
 	register_data = BMP280_MEAS_BIT_MASK;
 	HAL_I2C_write_single_register( BMP280_I2C_ADDR, BMP280_CTRL_MEAS, &register_data );
 
-	register_data = 0u;
-	HAL_I2C_read_register( BMP280_I2C_ADDR, BMP280_CTRL_MEAS, &register_data );
-
 	register_data = BMP280_CONFIG_BIT_MASK;
 	HAL_I2C_write_single_register( BMP280_I2C_ADDR, BMP280_CONFIG, &register_data );
 
@@ -67,6 +67,11 @@ void BMP280_init( void )
 	BMP280_read_calib_values();
 
 	BMP280_init_s = TRUE;
+
+	if( id != BMP280_DEVICE_ID )
+	{
+		BMP280_failure_status_s = FAIL;
+	}
 }
 
 
@@ -187,6 +192,7 @@ void BMP280_convert( u32_t* temperature, u32_t* pressure)
 void BMP280_trigger_meas( void )
 {
 	u8_t status;
+	u16_t timeout = 0u;
 
 	BMP280_init();
 
@@ -198,10 +204,15 @@ void BMP280_trigger_meas( void )
 
 	status = BMP280_read_status();
 
-	while( ( status & BMP280_MEASURING ) == BMP280_MEASURING )
+	while( ( ( status & BMP280_MEASURING ) == BMP280_MEASURING ) && ( timeout < BMP280_READ_TIMEOUT ) )
 	{
 		status = BMP280_read_status();
 		delay_us( 20000u );
+	}
+
+	if( status != BMP280_MEASURE_COMPLETE )
+	{
+		BMP280_failure_status_s = FAIL;
 	}
 
 	BMP280_convert( &BMP280_temperature_reading_s, &BMP280_pressure_reading_s );
@@ -228,6 +239,11 @@ void BMP280_set_mode ( BMP280_operating_modes_et mode )
 s32_t BMP280_get_temperature( void )
 {
 	return ( BMP280_temperature_reading_s );
+}
+
+pass_fail_et BMP280_get_failure_status( void )
+{
+	return ( BMP280_failure_status_s );
 }
 
 

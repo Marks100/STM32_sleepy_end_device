@@ -24,9 +24,10 @@
 
 RCC_ClocksTypeDef RCC_Clocks;
 u16_t delay_timer = 0u;
-u8_t  NRF24_register_readback_s[NRF24_DEFAULT_CONFIGURATION_SIZE];
 u8_t  NRF24_rf_frame_s[12];
+
 MODE_type_et operating_mode;
+pass_fail_et nrf_status;
 
 
 int main(void)
@@ -51,18 +52,18 @@ int main(void)
 	HAL_ADC_init();
 	NVM_init();
 
+	/* Initialise the RTC */
+	RTC_ext_init();
+
+	/* Initialise the NRF24 variables */
+	NRF24_init();
+
 	if( get_operating_mode() == DEBUG_MODE )
 	{
 		/* In debug mode lets init the debug usart as this consumes lots of power */
 		SERIAL_init();
 		HAL_BRD_set_onboard_LED( ON );
 	}
-
-	/* Initialise the RTC */
-	RTC_ext_init();
-
-	/* Initialise the NRF24 variables */
-	NRF24_init();
 
 	while (1)
 	{
@@ -82,6 +83,9 @@ int main(void)
 			/* Send the data */
 			NRF_simple_send( NRF24_rf_frame_s, sizeof( NRF24_rf_frame_s ), 1u );
 
+			/* Check for any failures */
+			check_failures();
+
 			/* Disable the SPI peripheral and clock to save power after the RF transmission */
 			HAL_SPI_de_init();
 
@@ -98,6 +102,9 @@ int main(void)
 		{
 			/* Handle the serial messages */
 			SERIAL_msg_handler();
+
+			/* Check for any failures */
+			check_failures();
 
 			if( HAL_BRD_get_rtc_trigger_status() == TRUE )
 			{
@@ -229,6 +236,13 @@ void set_operating_mode( MODE_type_et mode )
 MODE_type_et get_operating_mode( void )
 {
 	return( operating_mode );
+}
+
+void check_failures( void )
+{
+	RTC_get_failure_status();
+	BMP280_get_failure_status();
+	NRF_get_failure_status();
 }
 
 

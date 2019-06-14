@@ -79,9 +79,10 @@ typedef enum
 /***************************************************************************************************
 **                              Function Prototypes                                               **
 ***************************************************************************************************/
-void RTC_ext_init( void );
-void RTC_set_wakeup_time( u32_t seconds );
-void RTC_grab_current_running_time( u8_t* data_p );
+void	     RTC_ext_init( void );
+void         RTC_set_wakeup_time( u32_t seconds );
+void         RTC_grab_current_running_time( u8_t* data_p );
+pass_fail_et RTC_get_failure_status( void );
 
 
 #endif /* RTC_H multiple inclusion guard */

@@ -328,7 +328,7 @@ typedef struct
 /***************************************************************************************************
 **                              Function Prototypes                                               **
 ***************************************************************************************************/
-void                 NRF24_init( void );
+pass_fail_et         NRF24_init( void );
 void                 NRF24_tick( void );
 pass_fail_et         NRF24_set_configuration( NRF24_static_configuration_et config );
 pass_fail_et         NRF24_read_registers( NRF24_instruction_et instruction, NRF24_registers_et address, u8_t read_data[], u8_t num_bytes );
@@ -374,6 +374,7 @@ void                 NRF24_spi_slave_select( low_high_et state );
 void                 NRF24_ce_select( low_high_et state );
 void 				 NRF_simple_send( u8_t* data_p, u8_t len, u8_t num );
 void                 NRF24_power_down( void );
+pass_fail_et 		 NRF_get_failure_status( void );
 
 
 

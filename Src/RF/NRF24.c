@@ -54,6 +54,8 @@ NRF24_tx_rx_payload_info_st NRF24_tx_rx_payload_info_s;
 
 false_true_et  NRF24_start_rf_test_s;
 
+pass_fail_et NRF_failure_status_s;
+
 
 /***************************************************************************************************
 **                              Data declarations and definitions                                 **
@@ -77,7 +79,7 @@ false_true_et  NRF24_start_rf_test_s;
 *   \note
 *
 ***************************************************************************************************/
-void NRF24_init( void )
+pass_fail_et NRF24_init( void )
 {
 	/* Set up the state to initialise the module in the 1 sec tick */
 	NRF24_state_s = NRF24_POWERING_UP;
@@ -87,6 +89,8 @@ void NRF24_init( void )
 	NRF24_start_rf_test_s = TRUE;
 
     STDC_memset( &NRF24_tx_rx_payload_info_s, 0x00, sizeof( NRF24_tx_rx_payload_info_s ) );
+
+    NRF_failure_status_s = PASS;
 }
 
 
@@ -1851,6 +1855,11 @@ void NRF24_power_down( void )
 	NRF24_ce_select( HIGH );
 }
 
+
+pass_fail_et NRF_get_failure_status( void )
+{
+	return( NRF_failure_status_s );
+}
 
 
 /***************************************************************************************************

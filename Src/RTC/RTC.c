@@ -42,7 +42,8 @@
 
 
 extern NVM_info_st NVM_info_s;
-false_true_et 	RTC_fault_occured_s;
+
+pass_fail_et RTC_failure_status_s;
 
 /***************************************************************************************************
 **                              Data declarations and definitions                                 **
@@ -75,7 +76,7 @@ const u8_t RTC_EXT_default_register_values[ RTC_EXT_MAX_NUM_REGS ] =
 void RTC_ext_init( void )
 {
 	/* Assume no fault until it is detected */
-	RTC_fault_occured_s = FALSE;
+	RTC_failure_status_s = PASS;
 
 	u8_t data_burst[16];
 	u8_t time_array[4];
@@ -97,13 +98,15 @@ void RTC_ext_init( void )
 	/* Now adjust it with the currently stored NVM value */
 	RTC_set_wakeup_time( NVM_info_s.NVM_generic_data_blk_s.sleep_time );
 
+	
+	/* Now do some checking to ensure that the device is operational as we expect it to be */
 	HAL_I2C_read_multiple_registers( RTC_EXT_I2C_ADDRESS, Control_status_1, data_burst, sizeof( data_burst ) );
-
-	//if( )
-	//{
-		//RTC_fault_occured_s = TRUE;
-	//}
-
+	
+	if( STDC_memcompare( data_burst, RTC_EXT_default_register_values, sizeof(data_burst) ) )
+	{
+		/* Record a failure */
+		RTC_failure_status_s = FAIL;
+	}
 }
 
 
@@ -173,6 +176,11 @@ void RTC_grab_current_running_time( u8_t* data_p )
 	HAL_I2C_read_multiple_registers( RTC_EXT_I2C_ADDRESS, VL_seconds, data_p, RTC_TIME_ARRAY_SIZE );
 }
 
+
+pass_fail_et RTC_get_failure_status( void )
+{
+	return( RTC_failure_status_s );
+}
 
 
 ///****************************** END OF FILE *******************************************************/
