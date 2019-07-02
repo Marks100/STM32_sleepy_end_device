@@ -13,7 +13,7 @@
 #define BMP280_RESET_CMD	0xB6
 
 #define BMP280_MEASURING	        0x08
-#define BMP280_MEASURE_COMPLETE  	0x08
+#define BMP280_MEASURE_COMPLETE  	0x00
 
 #define	BMP280_OVERSAMPLING_T1		0x20
 #define	BMP280_OVERSAMPLING_T2		0x40
@@ -49,7 +49,7 @@
 #define	BMP280_MEAS_BIT_MASK			(BMP280_OVERSAMPLING_T1 | BMP280_OVERSAMPLING_P1 | BMP280_MODE_SLEEP)
 #define	BMP280_CONFIG_BIT_MASK		    (BMP280_TSB_0_5 | BMP280_FILTER_COEFFICIENT16 )
 
-#define BMP280_READ_TIMEOUT			10u
+#define BMP280_READ_TIMEOUT			20u
 
 /***************************************************************************************************
 **                              Defines                                                           **

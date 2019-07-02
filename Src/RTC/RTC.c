@@ -80,6 +80,7 @@ void RTC_ext_init( void )
 
 	u8_t data_burst[16];
 	u8_t time_array[4];
+	u8_t test_data[16];
 
 	HAL_I2C_read_multiple_registers( RTC_EXT_I2C_ADDRESS, Control_status_1, data_burst, sizeof( data_burst ) );
 
@@ -102,7 +103,10 @@ void RTC_ext_init( void )
 	/* Now do some checking to ensure that the device is operational as we expect it to be */
 	HAL_I2C_read_multiple_registers( RTC_EXT_I2C_ADDRESS, Control_status_1, data_burst, sizeof( data_burst ) );
 	
-	if( STDC_memcompare( data_burst, RTC_EXT_default_register_values, sizeof(data_burst) ) )
+	STDC_memcpy( test_data, RTC_EXT_default_register_values, sizeof( test_data ) );
+	STDC_memcpy( &test_data[2], time_array, sizeof( time_array ) );
+
+	if( STDC_memcompare( data_burst, test_data, sizeof(data_burst) ) == FALSE )
 	{
 		/* Record a failure */
 		RTC_failure_status_s = FAIL;

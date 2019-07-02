@@ -64,6 +64,13 @@ void HAL_BRD_init( void )
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
+	/* Configure the GPIO_LED pin */
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
+	GPIO_Init(GPIOC, &GPIO_InitStructure);
+	HAL_BRD_set_onboard_LED( OFF );
+
 	/* small delay to allow the button to settle */
 	delay_us(500);
 
@@ -76,14 +83,6 @@ void HAL_BRD_init( void )
 	if( debug_mode == ENABLE_ )
 	{
 		set_operating_mode( DEBUG_MODE );
-
-		/* Configure the GPIO_LED pin */
-		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;
-		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-		GPIO_Init(GPIOC, &GPIO_InitStructure);
-
-		HAL_BRD_set_onboard_LED( OFF );
 
 		/* configure the debug mode led ( this lets us know we are in debug mode and will only be turned
 		on in debug mode */

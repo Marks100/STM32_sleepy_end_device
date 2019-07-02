@@ -1796,6 +1796,7 @@ void NRF24_ce_select( low_high_et state )
 void NRF_simple_send( u8_t* data_p, u8_t len, u8_t num )
 {
 	u8_t i = 0u;
+	u8_t data_test;
 
     HAL_BRD_set_NRF_power_pin_state( ON );
 
@@ -1842,6 +1843,14 @@ void NRF_simple_send( u8_t* data_p, u8_t len, u8_t num )
 			NRF24_status_register_clr_bit( MAX_RT );
 		}
 	}
+
+	NRF24_read_registers( R_REGISTER, RF_CH, &data_test, 1u );
+
+	if( data_test != NRF_CHANNEL)
+	{
+		NRF_failure_status_s = FAIL;
+	}
+
 
 	HAL_BRD_set_NRF_power_pin_state( OFF );
 }

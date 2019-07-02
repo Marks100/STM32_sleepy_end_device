@@ -208,14 +208,15 @@ void BMP280_trigger_meas( void )
 	{
 		status = BMP280_read_status();
 		delay_us( 20000u );
-	}
-
-	if( status != BMP280_MEASURE_COMPLETE )
-	{
-		BMP280_failure_status_s = FAIL;
+		timeout++;
 	}
 
 	BMP280_convert( &BMP280_temperature_reading_s, &BMP280_pressure_reading_s );
+
+	if( BMP280_read_id() != BMP280_DEVICE_ID )
+	{
+		BMP280_failure_status_s = TRUE;
+	}
 
 	BMP280_set_mode( BMP280_SLEEP_MODE );
 }

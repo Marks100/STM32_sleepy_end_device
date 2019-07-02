@@ -152,6 +152,7 @@ false_true_et HAL_SPI_get_init_status( void )
 u8_t HAL_SPI_write_and_read_data( u8_t tx_data )
 {
     u8_t return_value;
+    u16_t timeout = 0;
 
 	/* First lets do a dummy read to make sure that the interrupt
 	flag is clear and that the buffer is empty*/
@@ -160,7 +161,15 @@ u8_t HAL_SPI_write_and_read_data( u8_t tx_data )
 	SPI_I2S_SendData(SPI1, tx_data);
 
 	/* Wait for the SPI busy flag to clear */
-	while(SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_BSY) == SET);
+	while(SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_BSY) == SET)
+	{
+		if( timeout++ >= HAL_SPI_LL_TIMEOUT )
+		{
+			/* something is wrong */
+			assert_failed(1);
+			break;
+		}
+	}
 
 	/* Read the buffer on the SPI receive register */
 	return_value = SPI_I2S_ReceiveData( SPI1 );

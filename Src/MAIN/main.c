@@ -69,7 +69,7 @@ int main(void)
 	{
 		if( get_operating_mode() != DEBUG_MODE )
 		{
-			BMP280_trigger_meas();
+			//BMP280_trigger_meas();
 
 			/* Populate all the data into the RF frame */
 			populate_rf_frame();
@@ -103,9 +103,6 @@ int main(void)
 			/* Handle the serial messages */
 			SERIAL_msg_handler();
 
-			/* Check for any failures */
-			check_failures();
-
 			if( HAL_BRD_get_rtc_trigger_status() == TRUE )
 			{
 				BMP280_trigger_meas();
@@ -117,6 +114,9 @@ int main(void)
 				/* Set the trigger back to false */
 				HAL_BRD_set_rtc_trigger_status( FALSE );
 			}
+
+			/* Check for any failures */
+			check_failures();
 		}
 	}
 }
@@ -169,7 +169,7 @@ u8_t generate_random_number( void )
 	srand( seed );
 
     /* Grab the now "random :)" number and limit the values to between 0 and 255 ( 1 byte ) */
-    random_number = rand()%255u;
+    random_number = ( rand()%U8_T_MAX );
 
 	return ( random_number );
 }
@@ -240,9 +240,16 @@ MODE_type_et get_operating_mode( void )
 
 void check_failures( void )
 {
-	RTC_get_failure_status();
-	BMP280_get_failure_status();
-	NRF_get_failure_status();
+	if( ( RTC_get_failure_status() == FAIL ) || \
+		( BMP280_get_failure_status() == FAIL ) || \
+		( NRF_get_failure_status() == FAIL ) )
+		{
+			while(1)
+			{
+				HAL_BRD_toggle_onboard_led();
+				delay_us(100000);
+			}
+		}
 }
 
 
